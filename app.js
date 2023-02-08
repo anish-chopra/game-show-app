@@ -3,7 +3,7 @@ let phrase = document.getElementById('phrase');
 let resetButton = document.getElementsByClassName('btn__reset')
 let missed = 0;
 
-let phrases = ['Blessing in Disguise', 'Dime a Dozen', 'Bite the Bullet', 'Beat Around the Bush', 'Pull Yourself Together']
+let phrases = ['blessing in disguise', 'dime a dozen', 'bite the bullet', 'beat around the bush', 'pull yourself together']
 let randomPhrase = getRandomPhraseAsArray(phrases);
 resetButton[0].addEventListener('click', hideOverlay);
 
@@ -42,20 +42,24 @@ function checkLetter(pressedButton) {
     let liElementsAll = document.getElementsByClassName('letter');
     let matchFound = [];
     for (let i = 0; i < liElementsAll.length; i++) {
-        if(liElementsAll[i].innerHTML === pressedButton.toUpperCase()) {
+        if(liElementsAll[i].innerHTML === pressedButton) {
             liElementsAll[i].classList.add('show');
-            matchFound.push(liElementsAll[i]);
+            matchFound.push(liElementsAll[i].innerHTML);
         }
-    }  
-    console.log(liElementsAll);
+    }
     return matchFound
 }
-// checkLetter();
 
 //Event Listener for clicked keyboard on screen
 qwerty.addEventListener('click', (event) => {
+    let checkLetterVariable = checkLetter(event.target.innerHTML);
     if (event.target.className !== "chosen" && event.target.className !== "keyrow") {
     event.target.classList.add("chosen");
-    checkLetter(event.target.innerHTML.toUpperCase());
+    console.log(checkLetterVariable);
+    if (checkLetterVariable.length === 0) {
+        let hearts = document.getElementsByClassName('tries');
+        hearts[0].remove();
+        missed = missed + 1;
+    }
     }
 })
