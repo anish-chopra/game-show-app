@@ -40,10 +40,10 @@ addPhraseToDisplay(randomPhrase);
 //Function to check the pressed letter for a match
 function checkLetter(pressedButton) {
     let liElementsAll = document.getElementsByClassName('letter');
-    let matchFound = null;
+    let matchFound = [];
     for (let i = 0; i < liElementsAll.length; i++) {
-        if(liElementsAll[i].innerHTML === pressedButton) {
-            liElementsAll[i].className = "show";
+        if(liElementsAll[i].innerHTML === pressedButton.toUpperCase()) {
+            liElementsAll[i].classList.add('show');
             matchFound.push(liElementsAll[i]);
         }
     }  
@@ -56,6 +56,6 @@ function checkLetter(pressedButton) {
 qwerty.addEventListener('click', (event) => {
     if (event.target.className !== "chosen" && event.target.className !== "keyrow") {
     event.target.classList.add("chosen");
-    checkLetter(event.target.innerHTML);
+    checkLetter(event.target.innerHTML.toUpperCase());
     }
 })
