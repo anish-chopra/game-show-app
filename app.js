@@ -56,10 +56,45 @@ qwerty.addEventListener('click', (event) => {
     if (event.target.className !== "chosen" && event.target.className !== "keyrow") {
     event.target.classList.add("chosen");
     console.log(checkLetterVariable);
+    checkWin();
     if (checkLetterVariable.length === 0) {
         let hearts = document.getElementsByClassName('tries');
         hearts[0].remove();
         missed = missed + 1;
+        checkWin();
     }
     }
 })
+
+function checkWin() {
+    let classLetter = document.getElementsByClassName('letter');
+    let classShow = document.getElementsByClassName('show');
+    if (classLetter.length === classShow.length) {
+        let overlay = document.getElementById('overlay');
+        overlay.classList.add('win');
+        document.getElementsByClassName('title')[0].innerHTML = "YOU WON!"
+        overlay.style.display = 'flex';
+        let buttonReset = document.createElement('a');
+        buttonReset.className = "btn__reset"
+        buttonReset.innerHTML = "Reset Game";
+        overlay.appendChild(buttonReset);
+        document.getElementsByClassName('btn__reset')[0].remove();
+        buttonReset.addEventListener('click', (e) => {
+            location.reload();
+            overlay.style.display = 'none';
+        })
+    } else if (missed > 4) {
+        overlay.classList.add('lose');
+        document.getElementsByClassName('title')[0].innerHTML = "YOU LOST!";
+        overlay.style.display = 'flex';
+        let buttonReset = document.createElement('a');
+        buttonReset.className = "btn__reset"
+        buttonReset.innerHTML = "Reset Game";
+        overlay.appendChild(buttonReset);
+        document.getElementsByClassName('btn__reset')[0].remove();
+        buttonReset.addEventListener('click', (e) => {
+            location.reload();
+            overlay.style.display = 'none';
+        })
+    }
+}
