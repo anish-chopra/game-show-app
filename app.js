@@ -2,6 +2,7 @@ let qwerty = document.getElementById('qwerty');
 let phrase = document.getElementById('phrase');
 let resetButton = document.getElementsByClassName('btn__reset')
 let missed = 0;
+let hearts = document.querySelectorAll('img');
 
 let phrases = ['blessing in disguise', 'dime a dozen', 'bite the bullet', 'beat around the bush', 'pull yourself together']
 let randomPhrase = getRandomPhraseAsArray(phrases);
@@ -53,18 +54,18 @@ function checkLetter(pressedButton) {
 //Event Listener for clicked keyboard on screen
 qwerty.addEventListener('click', (event) => {
     let checkLetterVariable = checkLetter(event.target.innerHTML);
-    if (event.target.className !== "chosen" && event.target.className !== "keyrow") {
+    if (event.target.className !== "chosen" && event.target.className !== "keyrow" && event.target.className !== "section") {
     event.target.classList.add("chosen");
     console.log(checkLetterVariable);
     checkWin();
     if (checkLetterVariable.length === 0) {
-        let hearts = document.getElementsByClassName('tries');
-        hearts[0].remove();
+        let hearts = document.querySelectorAll('img');
+        hearts[0 + missed].src = "images/lostHeart.png";
         missed = missed + 1;
         checkWin();
     }
     }
-})
+    })
 
 function checkWin() {
     let classLetter = document.getElementsByClassName('letter');
@@ -79,9 +80,29 @@ function checkWin() {
         buttonReset.innerHTML = "Reset Game";
         overlay.appendChild(buttonReset);
         document.getElementsByClassName('btn__reset')[0].remove();
-        buttonReset.addEventListener('click', (e) => {
-            location.reload();
-            overlay.style.display = 'none';
+        buttonReset.addEventListener('click', () => {
+            let allButtons = document.querySelectorAll('button');
+            let allLetter = document.getElementsByClassName('letter');
+            let allSpace = document.getElementsByClassName('space');
+            let allShow = document.getElementsByClassName('show');
+            for (let i = 0; i < allButtons.length; i++) {
+                allButtons[i].classList.remove("chosen");
+            }
+            for (let i = 0; i = allShow.length; i++) {
+                allShow[0].remove();
+            }
+            for (let i = 0; i = allLetter.length; i++) {
+                allLetter[0].remove();
+            }
+            for (let i = 0; i = allSpace.length; i++) {
+                allSpace[0].remove();
+            }
+            addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+            missed = 0;
+            for (let i = 0; i < hearts.length; i ++) {
+            hearts[i].src = "images/liveHeart.png";
+    }
+            document.getElementById('overlay').style.display = "none";
         })
     } else if (missed > 4) {
         overlay.classList.add('lose');
@@ -92,9 +113,29 @@ function checkWin() {
         buttonReset.innerHTML = "Reset Game";
         overlay.appendChild(buttonReset);
         document.getElementsByClassName('btn__reset')[0].remove();
-        buttonReset.addEventListener('click', (e) => {
-            location.reload();
-            overlay.style.display = 'none';
+        buttonReset.addEventListener('click', () => {
+            let allButtons = document.querySelectorAll('button');
+            let allLetter = document.getElementsByClassName('letter');
+            let allSpace = document.getElementsByClassName('space');
+            let allShow = document.getElementsByClassName('show');
+            for (let i = 0; i < allButtons.length; i++) {
+                allButtons[i].classList.remove("chosen");
+            }
+            for (let i = 0; i = allShow.length; i++) {
+                allShow[0].remove();
+            }
+            for (let i = 0; i = allLetter.length; i++) {
+                allLetter[0].remove();
+            }
+            for (let i = 0; i = allSpace.length; i++) {
+                allSpace[0].remove();
+            }
+            addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+            missed = 0;
+            for (let i = 0; i < hearts.length; i ++) {
+            hearts[i].src = "images/liveHeart.png";
+    }
+            document.getElementById('overlay').style.display = "none";
         })
     }
 }
